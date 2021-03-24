@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-03-24 07:23+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: apps/votes_counter/app.py:17
+msgid "Votes counter"
+msgstr "Contador de votos"
+
+#: apps/votes_counter/models/candidate.py:10
+msgid "This user is candidate"
+msgstr "Este usuario es candidato"
+
+#: apps/votes_counter/models/candidate.py:19
+#, fuzzy
+#| msgid "Candidate users config"
+msgid "Candidate user config"
+msgstr "Configuración de usuarios candidatos"
+
+#: apps/votes_counter/models/candidate.py:20
+msgid "Candidate users config"
+msgstr "Configuración de usuarios candidatos"
+
+#: apps/votes_counter/models/comuna.py:7
+msgid "Name"
+msgstr "Nombre"
+
+#: apps/votes_counter/models/comuna.py:11
+msgid "Comuna"
+msgstr ""
+
+#: apps/votes_counter/models/comuna.py:12
+msgid "Comunas"
+msgstr ""
+
+#: apps/votes_counter/models/polling_place.py:9
+#: apps/votes_counter/models/polling_place.py:17
+msgid "Polling place"
+msgstr "Lugar de votación"
+
+#: apps/votes_counter/models/polling_place.py:18
+msgid "Polling places"
+msgstr "Lugares de votación"
+
+#: apps/votes_counter/models/polling_place_table.py:9
+#: apps/votes_counter/models/polling_place_table.py:17
+msgid "Polling place table"
+msgstr "Mesa en lugar de votación"
+
+#: apps/votes_counter/models/polling_place_table.py:18
+msgid "Polling places tables"
+msgstr "Mesas en lugares de votación"
+
+#: apps/votes_counter/models/votes.py:18
+msgid "Votes count"
+msgstr "Conteo de votos"
+
+#: apps/votes_counter/models/votes.py:22 apps/votes_counter/models/votes.py:23
+msgid "Votes"
+msgstr "Votos"
+
+#: apps/votes_counter/urls.py:27
+msgid "Aequum votes counter API"
+msgstr ""
+
+#: apps/votes_counter/urls.py:29
+msgid "Web application"
+msgstr "Aplicacion Web"
+
+#~ msgid "Candidate config"
+#~ msgstr "Configuración de usuario candidato"

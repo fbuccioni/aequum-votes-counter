@@ -8,9 +8,14 @@
     display: none;
 }
 
-.menu {
+.save-changes, .menu, #top {
     background-color: #292433;
-    border-right: #090433 solid 1px;
+    border: #13052d solid 1px;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,.25);
+}
+
+
+.menu {
     position: fixed;
     top: 0px;
     left: 0px;
@@ -39,11 +44,10 @@
 
 #content {
     width: 100vw;
-    height: 100vh;
     padding: 0;
 }
 
-#top, #top > * {
+#top, #top > div > * {
     border-color: #aaa;
     border-style: solid;
     border-width: 0px;
@@ -52,6 +56,7 @@
 #top {
     height: 5rem;
     border-bottom-width: 1px !important;
+    z-index: 10;
 }
 
 .btn-menu {
@@ -66,7 +71,7 @@
     margin: -0.5rem;
 }
 
-.vote-ops .btn {
+.vote-ops .btn.ops {
     width: 2rem;
     height: 2rem;
     margin: 0 0.5rem;
@@ -76,6 +81,10 @@
     font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
 }
 
+.vote-ops button.cancel {
+    margin: 0 0.5rem;
+}
+
 .vote-ops .form-control {
     width: calc(100% - 5rem - 4px);
     max-width: 5rem
@@ -83,4 +92,34 @@
 
 #candidate-total-votes img {
     border-color: transparent !important;
+}
+.container-fluid {
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important
+}
+
+.save-changes {
+    z-index: 10;
+}
+
+.btn.cancel-all {
+    margin-right: .5rem;
+}
+
+.save-changes {
+    border-bottom: 0px none transparent;
+    border-left: 0px none transparent;
+    border-right: 0px none transparent;
+}
+
+#top {
+    border-top: 0px none transparent;
+    border-left: 0px none transparent;
+    border-right: 0px none transparent;
+}
+
+.menu {
+    border-top: 0px none transparent;
+    border-bottom: 0px none transparent;
+    border-left: 0px none transparent;
 }

@@ -14,8 +14,67 @@ let app = {
     current: {
         comuna: null,
         pollingPlace: null,
-        pollingPlaceTable: null
+        pollingPlaceTable: null,
+        votesInChange: {},
+        addVotesInChange: function(id, value) {
+            this.votesInChange[id] = value;
+            this._localStorageVotesInChange();
+        },
+        removeVotesInChange: function(id) {
+            delete this.votesInChange[id];
+            this._localStorageVotesInChange();
+        },
+        localStorageChanges: function(){
+            let votesJSON = localStorage.getItem('pending-changes'),
+                locationJSON = localStorage.getItem('pending-changes-location'),
+                pendings = null
+            ;
+
+            if(votesJSON)
+                pendings = {
+                    "location": JSON.parse(locationJSON),
+                    "votes": JSON.parse(votesJSON)
+                };
+
+            return pendings
+        },
+        clearVotesInChange: function(ask) {
+            let go = true,
+                pendings = this.localStorageChanges()
+            ;
+
+            if(pendings && (!jQuery.isEmptyObject(pendings.votes)) && typeof(ask) !== "undefined" && ask)
+                go = confirm('Hay un conjunto de cambios sin guardar, ¿Desea descartar los cambios?');
+
+            if(go) {
+                this.votesInChange = {};
+                this._localStorageVotesInChange();
+            }
+
+            return go
+        },
+        _localStorageVotesInChange: function() {
+            if($.isEmptyObject(this.votesInChange)) {
+                localStorage.removeItem('pending-changes');
+                localStorage.removeItem('pending-changes-location');
+            } else {
+                localStorage.setItem('pending-changes', JSON.stringify(this.votesInChange));
+                localStorage.setItem('pending-changes-location', JSON.stringify({
+                    "comuna": this["comuna"],
+                    "pollingPlace": this["pollingPlace"],
+                    "pollingPlaceTable": this["pollingPlaceTable"],
+                }));
+            }
+        }
     },
+    checkPendingVotes: function() {
+        let pendings = this.current.localStorageChanges();
+        if(!pendings || $.isEmptyObject(pendings.votes))
+            return;
+
+        this.recover = pendings;
+    },
+    recover: null,
     votesWatcherLock: false,
     votesWatcherTimeout: null,
     opsQueue: [],
@@ -316,11 +375,19 @@ let app = {
             )
     },
     setPollingPlaceTable: function(comunaID, pollingPlaceID, pollingPlaceTableID) {
-        let $votes = $("#votes").empty();
+        let $votes = $("#votes"),
+            go = app.recover || app.current.clearVotesInChange(true)
+        ;
+
+        if(!go)
+            return;
+
+        $votes.empty();
 
         app.current.comuna = comunaID;
         app.current.pollingPlace = pollingPlaceID;
         app.current.pollingPlaceTable = pollingPlaceTableID;
+
 
         $votes.append(
             $(
@@ -357,7 +424,19 @@ let app = {
 
             $('#candidate-' + slugify(vote.name || 'total') + '-votes input')
                 .val(vote.count)
+                .data({'value': vote.count})
+                .trigger('input')
             ;
+        }
+
+        if(this.recover) {
+            for(let inputID in this.recover.votes) {
+                $('#' + inputID)
+                    .val(this.recover.votes[inputID])
+                    .trigger('input')
+            }
+
+            this.recover = null;
         }
     },
     loadPollingPlaceTableVotes: function(comunaID, pollingPlaceID, pollingPlaceTableID, block) {
@@ -378,6 +457,7 @@ let app = {
         $.getJSON(
             '/api/comunas', function (comunas) {
                 $('#comunas').empty();
+                app.checkPendingVotes();
 
                 for (var i in comunas) {
                     var $entryComuna = $('<li><a>' + comunas[i].name + '</a></li>'),
@@ -389,6 +469,7 @@ let app = {
                         .children('ul').empty().remove().end()
                         .append($submenuComuna)
                         .children('a')
+                        .attr('id', 'comuna-' + comunas[i].id)
                         .data('comuna-id', comunas[i].id)
                         .on('click', function (evt) {
                             var self = this,
@@ -411,6 +492,12 @@ let app = {
                                             .siblings('ul').empty().remove().end()
                                             .append('<ul/>')
                                             .children('a')
+                                            .attr(
+                                                'id',
+                                                'polling-place-'
+                                                + $(self).data('comuna-id') + '-'
+                                                + pollingPlaces[k].id
+                                            )
                                             .data('comuna-id', $(self).data('comuna-id'))
                                             .data('polling-place-id', pollingPlaces[k].id)
                                             .on('click', function () {
@@ -431,31 +518,48 @@ let app = {
                                                             $submenuPollingPlace.append($entryPollingPlaceTable);
                                                             $entryPollingPlaceTable
                                                                 .children('a')
+                                                                .attr(
+                                                                    'id',
+                                                                    'table-'
+                                                                    + $(self).data('comuna-id')
+                                                                    + '-' + $(self).data('polling-place-id')
+                                                                    + '-' + pollingPlaceTables[j].id
+                                                                )
                                                                 .data('comuna-id', $(self).data('comuna-id'))
                                                                 .data('polling-place-id', $(self).data('polling-place-id'))
                                                                 .data('polling-place-table-id', pollingPlaceTables[j].id)
-                                                                .on('click', function () {
+                                                                .on('click', function (evt) {
                                                                     var $this = $(this),
                                                                         $pollingPlaceAnchor = $this.parent().parent().siblings('a'),
                                                                         $comunaAnchor = $pollingPlaceAnchor.parent().parent().siblings('a')
                                                                     ;
 
-                                                                    app.setLocationTitle(
-                                                                        $pollingPlaceAnchor.text(),
-                                                                        $comunaAnchor.text(),
-                                                                        $this.text()
-                                                                    );
+                                                                    evt.stopImmediatePropagation();
+                                                                    evt.preventDefault();
 
                                                                     app.setPollingPlaceTable(
                                                                         $this.data('comuna-id'),
                                                                         $this.data('polling-place-id'),
                                                                         $this.data('polling-place-table-id'),
                                                                     );
+
+                                                                    app.setLocationTitle(
+                                                                        $pollingPlaceAnchor.text(),
+                                                                        $comunaAnchor.text(),
+                                                                        $this.text()
+                                                                    );
                                                                 })
                                                         }
 
+                                                        if(app.recover)
+                                                            $(
+                                                                '#table-' + app.recover.location.comuna
+                                                                + '-' + app.recover.location.pollingPlace
+                                                                + '-' + app.recover.location.pollingPlaceTable
+                                                            ).trigger('click');
+
                                                         app.unblock();
-                                                        $('ul > li > ul > li > ul > li > a').eq(0).trigger('click');
+                                                        // $('ul > li > ul > li > ul > li > a').eq(0).trigger('click');
                                                     }
                                                 )
                                                     .fail(app.unblock)
@@ -463,9 +567,14 @@ let app = {
                                             });
                                     }
 
-                                    app.unblock();
-                                    $('ul > li > ul > li > a').eq(0).trigger('click');
+                                    if(app.recover)
+                                        $(
+                                            '#polling-place-' + app.recover.location.comuna
+                                            + '-' + app.recover.location.pollingPlace
+                                        ).trigger('click');
+                                    // $('ul > li > ul > li > a').eq(0).trigger('click');
 
+                                    app.unblock();
                                 }
                             )
                                 .fail(app.unblock)
@@ -473,8 +582,10 @@ let app = {
                         });
                 }
 
+                if(app.recover)
+                    $('#comuna-' + app.recover.location.comuna).trigger('click')
+
                 app.unblock();
-                $('ul > li > a').eq(0).trigger('click');
             }
         )
             .fail(app.unblock)

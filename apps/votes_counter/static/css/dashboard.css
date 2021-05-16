@@ -1,30 +1,8 @@
-body, html {
-    font-family: "Oswald", "Helvetica", "Arial", sans-serif;
-    font-weight: 800;
-    font-size: 140%;
-}
-.container-fluid {
-    font-size: 90%;
-}
-.orange {
-    color: rgb(231, 122, 31);
-}
-yellow {
-    color: #fdc640;
-}
-.border-orange {
-    border-color: rgb(231, 122, 31) !important;
-}
 .percent {
     color:#000;
     border-color:#fdc640 !important;
     font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
     font-weight: 800;
-}
-.candidate-image {
-    width: 2.5rem;
-    margin-right: 0.5rem;
-    border-width: 2px !important;
 }
 .candidate.percent {
     width: calc(100% - 5rem);

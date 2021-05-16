@@ -1,0 +1,23 @@
+body, html {
+    font-family: "Oswald", "Helvetica", "Arial", sans-serif;
+    font-weight: 800;
+    font-size: 140%;
+}
+
+.container-fluid {
+    font-size: 90%;
+}
+.orange {
+    color: rgb(231, 122, 31);
+}
+yellow {
+    color: #fdc640;
+}
+.border-orange {
+    border-color: rgb(231, 122, 31) !important;
+}
+.candidate-image {
+    width: 2.5rem;
+    margin-right: 0.5rem;
+    border-width: 2px !important;
+}

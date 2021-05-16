@@ -5,17 +5,19 @@
     <meta charset="UTF-8">
     <title>Votos</title>
     <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static '/css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/common.css' %}" />
     <link rel="stylesheet" href="{% static '/css/votes.css' %}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 </head>
-<body>
-<div class="container-fluid" id="content">
-    <div class="row m-0" id="top">
+<body class="pb-5">
+<div class="m-0 fixed-top" id="top">
+    <div class="row h-100">
         <div class="col h2 m-0 d-table h-100 btn-menu"><span class="d-table-cell align-middle">☰</span></div>
         <div class="col h1 m-0 d-table h-100"><span id="title" class="d-table-cell align-middle"></span></div>
     </div>
+</div>
+<div class="container-fluid" id="content">
     <div id="votes"></div>
 </div>
 <div class="menu">
@@ -25,15 +27,20 @@
     </div>
     <div class="row" id="polling-places-votes"></div>
 </div>
+<div class="fixed-bottom w-100 save-changes text-right p-2 d-none">
+    <button class="btn btn-danger cancel-all">Cancelar cambios</button></button>
+    <button class="btn btn-primary save-changes">Guardar cambios</button>
+</div>
 <div id="block"></div>
 <!-- Templates -->
 <script type="x-template" id="template-candidates">
     <div class="row mr-1 mt-3 mb-4 ml-3" id="candidate-{slug}-votes" data-id="{id}">
         <div class="col-sm-5 col-md-4 p-0 mt-2 orange text-nowrap text-truncate"><img src="{image}" class="candidate-image rounded-circle border border-orange" />{name}</div>
         <div class="col-sm-7 col-md-8 p-0 mt-2 vote-ops">
-            <button class="btn rounded-circle border d-inline-block text-center remove"><b class="align-middle h4">-</b></button>
-            <input type="number" class="form-control d-inline-block text-right" readonly="readonly" />
-            <button class="btn rounded-circle border d-inline-block text-center add"><b class="align-middle h4">+</b></button>
+            <!-- <button class="btn ops rounded-circle border d-inline-block text-center remove"><b class="align-middle h4">-</b></button> -->
+            <input type="number" min="0"  id="candidate-{slug}-votes-input" class="vote-input form-control d-inline-block text-right" />
+            <!-- <button class="btn ops rounded-circle border d-inline-block text-center add"><b class="align-middle h4">+</b></button> -->
+            <button class="btn-sm btn-danger cancel d-none">Cancelar edición</button>
         </div>
     </div>
 </script>
@@ -43,43 +50,6 @@
 <script src="https://cdn.jsdelivr.net/npm/slugify@1.5.0/slugify.min.js"></script>
 <script src="{% static '/js/jquery.fittext.js' %}"></script>
 <script src="{% static '/js/app.js' %}"></script>
-<script type="text/javascript">
-    app.block();
-    // $('#title').fitText(1.2);
-
-    $('#votes').on('click', 'button', function() {
-        let op = $(this).hasClass('add') ? 'add' : 'remove',
-            cant = 1.
-            id = $(this).parent().parent().data('id'),
-            jsonOp = app.jsonOp(op, cant, (!id) ? null : id),
-            $input = $(this).siblings('input'),
-            $inputTotal = $('#candidate-total-votes input')
-        ;
-
-        $input.val(String(app.ops[op](parseInt($input.val()), cant)));
-        app.opsQueue.push(jsonOp);
-
-        if($inputTotal[0] != $input[0]) {
-            $inputTotal.val(String(app.ops[op](parseInt($inputTotal.val()), cant)));
-            app.opsQueue.push($.extend({}, jsonOp, {"candidate": null}));
-        }
-    });
-
-    $('#content').on('click', function() {
-        if($('.menu').css('transform') === 'none')
-            $('.menu').addClass('close');
-    });
-
-    $('.btn-menu').on('click', function() {
-        if($('.menu').css('transform') !== 'none')
-            $('.menu').removeClass('close');
-    });
-
-    app.loadCandidates(function() {
-        app.loadSideMenu();
-        app.startVotesWatcher();
-    });
-
-</script>
+<script src="{% static '/js/votes.js' %}"></script>
 </body>
 </html>

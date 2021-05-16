@@ -29,9 +29,13 @@ class Votes(ListModelMixin, CreateModelMixin, GenericViewSet):
             raise ValidationError("Input data must be an array")
 
         for op in request.data:
-            op_op = operator.add if op['op'] == "add" else operator.sub
-            self.get_queryset()\
-                .filter(candidate_id=op['candidate'])\
-                .update(count=op_op(F('count'), op['cant']))
+            queryset = self.get_queryset()\
+                .filter(candidate_id=op['candidate'])
+
+            if op['op'] == "set":
+                queryset.update(count=op['cant'])
+            else:
+                op_op = operator.add if op['op'] == "add" else operator.sub
+                queryset.update(count=op_op(F('count'), op['cant']))
 
         return self.list(self, request, *args, **kwargs)

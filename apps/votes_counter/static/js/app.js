@@ -369,9 +369,9 @@ let app = {
         $('#title')
             .empty()
             .append(
-                '<span class="orange">' + comuna + '</span>' +
-                ' 🢒 <span class="orange">' + pollingPlace + '</span>' +
-                ' 🢒 <span class="orange">' + table + '</span>'
+                '<span class="orange text-truncate d-inline-block">' + comuna + '</span>' +
+                ' 🢒 <span class="orange text-truncate d-inline-block">' + pollingPlace + '</span>' +
+                ' 🢒 <span class="orange text-truncate d-inline-block">' + table + '</span>'
             )
     },
     setPollingPlaceTable: function(comunaID, pollingPlaceID, pollingPlaceTableID) {
@@ -421,6 +421,11 @@ let app = {
     _votesCallback: function(votes) {
         for(let v in votes) {
             let vote = votes[v];
+
+            console.log(vote.count)
+            if(typeof(vote.count) === "undefined" || !vote.count) {
+                vote.count = 0;
+            }
 
             $('#candidate-' + slugify(vote.name || 'total') + '-votes input')
                 .val(vote.count)
@@ -544,8 +549,8 @@ let app = {
                                                                     );
 
                                                                     app.setLocationTitle(
-                                                                        $pollingPlaceAnchor.text(),
                                                                         $comunaAnchor.text(),
+                                                                        $pollingPlaceAnchor.text(),
                                                                         $this.text()
                                                                     );
                                                                 })

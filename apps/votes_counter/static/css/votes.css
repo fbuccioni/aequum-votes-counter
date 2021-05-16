@@ -25,6 +25,7 @@
     box-shadow: 0px 0px 15px 7px rgba(0,0,0,.25);
     transition: all 0.6s ease 0s;
     z-index: 100;
+    overflow-y: scroll;
 }
 
 .menu.close {
@@ -69,6 +70,10 @@
 
 #top > div > span {
     margin: -0.5rem;
+}
+
+#title > span {
+    max-width: 32%;
 }
 
 .vote-ops .btn.ops {
@@ -122,4 +127,15 @@
     border-top: 0px none transparent;
     border-bottom: 0px none transparent;
     border-left: 0px none transparent;
+}
+
+.menu{
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.menu::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }

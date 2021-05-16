@@ -6,9 +6,18 @@ from ... import serializers, models
 import operator
 
 
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+
+
+class CsrfExemptSessionAuthentication(SessionAuthentication):
+    def enforce_csrf(self, request):
+        return  # To not perform the csrf check previously happening
+
+
 class Votes(ListModelMixin, CreateModelMixin, GenericViewSet):
     serializer_class = serializers.Votes
     queryset = models.Votes.objects
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     def get_queryset(self) -> QuerySet:
         return super().get_queryset().filter(

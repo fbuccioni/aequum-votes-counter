@@ -1,0 +1,86 @@
+#block {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+
+.menu {
+    background-color: #292433;
+    border-right: #090433 solid 1px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    padding: 1rem;
+    padding-left: 0.5rem;
+    box-shadow: 0px 0px 15px 7px rgba(0,0,0,.25);
+    transition: all 0.6s ease 0s;
+    z-index: 100;
+}
+
+.menu.close {
+    box-shadow: none;
+    transform: translateX(-100%);
+}
+
+.menu ul#comunas li {
+    cursor: pointer;
+    padding-bottom: 1rem;
+    list-style-type: disc;
+}
+
+.menu ul#comunas li:first-of-type {
+    padding-top: 1rem;
+}
+
+#content {
+    width: 100vw;
+    height: 100vh;
+    padding: 0;
+}
+
+#top, #top > * {
+    border-color: #aaa;
+    border-style: solid;
+    border-width: 0px;
+}
+
+#top {
+    height: 5rem;
+    border-bottom-width: 1px !important;
+}
+
+.btn-menu {
+    border-right-width: 1px !important;
+    font-weight: bold;
+    flex: 0 0 5rem;
+    text-align: center;
+    cursor: default;
+}
+
+#top > div > span {
+    margin: -0.5rem;
+}
+
+.vote-ops .btn {
+    width: 2rem;
+    height: 2rem;
+    margin: 0 0.5rem;
+    padding: 0;
+    border-width: 2px !important;
+    font-weight: bold;
+    font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+}
+
+.vote-ops .form-control {
+    width: calc(100% - 5rem - 4px);
+    max-width: 5rem
+}
+
+#candidate-total-votes img {
+    border-color: transparent !important;
+}

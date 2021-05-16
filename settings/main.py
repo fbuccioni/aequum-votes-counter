@@ -68,7 +68,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_REGEX_WHITELIST = [
     r'example\.org(:\d+)?$', r'local(:\d+)?$'
 ]
-
+LOGIN_URL = "/admin/login"
 ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {

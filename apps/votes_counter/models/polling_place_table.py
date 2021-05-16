@@ -32,12 +32,25 @@ class PollingPlaceTable(models.Model):
 @receiver(signals.post_save, sender=PollingPlaceTable)
 def polling_place_table_total_votes_create(sender, instance, created, **kwargs):
     from .votes import Votes
+    from .candidate import UserCandidate
 
     if created:
         Votes.objects.create(
             candidate=None,
             polling_place_table=instance
         )
+
+        for candidate in UserCandidate.objects.all():
+            if not (
+                Votes.objects.filter(
+                    candidate=candidate,
+                    polling_place_table=instance
+                ).count()
+            ):
+                Votes(
+                    candidate=candidate,
+                    polling_place_table=instance
+                ).save()
 
 
 @receiver(signals.pre_delete, sender=PollingPlaceTable)

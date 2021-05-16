@@ -57,12 +57,24 @@ app.block();
     });
 
     $('.btn.save-changes').on('click', function() {
-        let op = 'set';
+        let values = $('.vote-input').map((i, e) => e.value).toArray(),
+            total = parseInt(values.shift()),
+            candidatesTotal = values.reduce((a, b) => parseInt(a) + parseInt(b), 0)
+        ;
+
+        if(total < candidatesTotal) {
+            alert(
+                "El valor \"total\" es menor a la suma " +
+                "de los votos de todos los candidatos (" + candidatesTotal + "), " +
+                "corriga este problema e intente nuevamente"
+            );
+            return;
+        }
 
         $('.vote-input').each(function() {
             let id = $(this).parent().parent().data('id');
             if(!$(this).siblings('button.cancel').hasClass('d-none'))
-                app.opsQueue.push(app.jsonOp(op, parseInt(this.value), (!id) ? null : id))
+                app.opsQueue.push(app.jsonOp('set', parseInt(this.value), (!id) ? null : id))
         });
 
         app.processQueue()

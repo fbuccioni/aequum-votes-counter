@@ -293,6 +293,13 @@ let app = {
                         totalVotes = data[3],
                         totalPercent = app.votes.total ? ((totalVotes / app.votes.total) * 100).toFixed(1) : 0
                     ;
+                        // PARCHE FEO
+                        if(isNaN(totalPercent))
+                            totalPercent = 0;
+
+                        if(isNaN(totalVotes))
+                            totalVotes = 0;
+
                         html += $('#tpl-item-total-votes')
                             .html()
                             .replace('{name}', list)

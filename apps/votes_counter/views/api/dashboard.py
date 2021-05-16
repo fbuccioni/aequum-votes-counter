@@ -1,18 +1,16 @@
 from collections import OrderedDict
 
 from django.db import connection
-from django.db.models import Prefetch
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-
-import apps.votes_counter.views.api.candidate
-from ... import models
 
 
 @api_view(["GET"])
 def votes(request):
     output_json = OrderedDict()
     fetch_size = 20
+    #lists = tuple(r[0] for r in models.List.objects.values_list('name', named=False).all())
+
     with connection.cursor() as cur:
         cur.execute("""
             SELECT      c.name as comuna,
@@ -53,10 +51,12 @@ def votes(request):
                 if name not in output_json[comuna][polling_place][table]['candidates']:
                     output_json[comuna][polling_place][table]['candidates'][name] = 0
 
-                if name not in output_json[comuna][polling_place][table]['lists']:
-                    output_json[comuna][polling_place][table]['lists'][lst] = 0
-
                 output_json[comuna][polling_place][table]['candidates'][name] += votes
-                output_json[comuna][polling_place][table]['lists'][lst] += votes
+
+                if lst is not None:
+                    if lst not in output_json[comuna][polling_place][table]['lists']:
+                        output_json[comuna][polling_place][table]['lists'][lst] = 0
+
+                    output_json[comuna][polling_place][table]['lists'][lst] += votes
 
     return Response(output_json)

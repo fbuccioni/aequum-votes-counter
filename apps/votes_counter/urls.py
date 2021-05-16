@@ -40,12 +40,27 @@ api_path = path(
     'api/', include(
         # Main viewsets
         routers.DefaultRouter([
-            #(r'thing', views.api.object.ThingViewSet, "api.thing"),
+            (r'comunas', views.api.Comuna, "api.comunas"),
+            (r'comunas/(?P<comuna_id>\d+)/polling-places', views.api.PollingPlace, "api.comunas.polling_places"),
+            (
+                r'comunas/(?P<comuna_id>\d+)/polling-places/(?P<polling_place_id>\d+)/tables',
+                views.api.PollingPlaceTable, "api.comunas.polling_places.tables"
+            ),
+            (
+                r'comunas/(?P<comuna_id>\d+)/polling-places/(?P<polling_place_id>\d+)/tables/(?P<polling_place_table_id>\d+)/votes',
+                views.api.Votes, "api.comunas.polling_places.tables.votes"
+            ),
         ]).urls + [
         # Additional views
-            #path(
-            #    'thing/<id>/other-action/', views.api.thing.other_action, name="api.user.places.list"
-            #),
+            path(
+                'dashboard/votes/', views.api.dashboard.votes, name="api.dashboard.votes"
+            ),
+            path(
+                'candidates/', views.api.candidate.view, name="api.candidate.views"
+            ),
+            path(
+                'lists/', views.api.list.view, name="api.candidate.views"
+            ),
         ]
     )
 )
@@ -61,6 +76,7 @@ api_path.url_patterns.append(
 )
 
 urlpatterns = [
-    path('', views.skeretonu),
+    path('', views.dashboard),
+    path('votes/', views.votes),
     api_path,
 ]

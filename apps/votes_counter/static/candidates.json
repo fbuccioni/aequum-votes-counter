@@ -1,0 +1,5 @@
+  {
+    "Rodrigo": {"color": "#ff6664", "image": "/static/images/rodrigo.jpg"},
+    "Sara": {"color": "#ff0", "image": "/static/images/sara.jpg"},
+    "Judith": {"color": "#0ff", "image": "/static/images/judith.jpg"}
+  }

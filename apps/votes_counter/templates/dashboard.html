@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Elecciones Mayo 2021</title>
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static '/css/dashboard.css' %}" />
+    <link href="https://unpkg.com/minibarjs@latest/dist/minibar.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+</head>
+<body>
+<div class="border p-2 mt-2 rounded fixed-top mw4 ml-2 mr-2">
+    <div class="text-center" id="total-votes"></div>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-xl-6 pl-2 pr-2 pr-xl-1">
+            <div class="border rounded pt-2 pb-2" id="candidate-totals"></div>
+        </div>
+        <div class="col-lg-12 col-xl-6 pl-2 pr-2 pl-xl-1 mt-2 mt-xl-0">
+            <div class="border rounded pt-2 pb-2" id="list-totals"></div>
+        </div>
+    </div>
+    <!-- <div class="row" id="polling-places-votes"></div> -->
+</div>
+
+<!-- Templates -->
+<script type="template" id="tpl-item-total-votes">
+    <div class="row mr-1 mt-3 mb-3 ml-3" id="candidate-{slug}-total-votes">
+        <div class="col-sm-5 col-md-4 p-0 mt-2 orange text-nowrap text-truncate"><img src="{image}" class="candidate-image rounded-circle border border-orange" />{name}</div>
+        <div class="col-sm-7 col-md-8 p-0 mt-2">
+            <div class="border percent candidate d-inline-block m-0 ml-1">
+                <div class="bar text-center align-middle percent border" style="background-color:{color};width:{percent}%"><small>{percent}%</small></div>
+            </div>
+            <div class="d-inline-block text-right">{votes}</div>
+        </div>
+    </div>
+</script>
+<script type="template" id="tpl-total-votes">
+    <div>
+        <span class="h2 mr-2">{votes}</span>
+        <span class="h4">Votos&nbsp;totales</span>
+    </div>
+</script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/slugify@1.5.0/slugify.min.js"></script>
+<script src="https://unpkg.com/minibarjs@latest/dist/minibar.min.js" type="text/javascript"></script>
+<script src="{% static '/js/dashboard.js' %}"></script>
+<script type="text/javascript">
+app.loadCandidates(() => app.loadLists(() => app.loadDashboardVotes()))
+</script>
+</body>
+</html>

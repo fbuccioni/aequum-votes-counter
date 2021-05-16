@@ -2,6 +2,7 @@
 django-votes_counter.rst admin file example.
 """
 from django.contrib import admin
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as gettext
 from . import votes_counter
 
@@ -23,12 +24,16 @@ class AdminSite(admin.sites.AdminSite):
 
 site = AdminSite()
 
+site.unregister(User)
+site.register(User, votes_counter.CustomUserAdmin)
+
 for admin_module in (votes_counter,):
     for item in dir(admin_module):
-        if hasattr(item, 'ignore_auto'):
+        model_admin = getattr(admin_module, item)
+
+        if hasattr(model_admin, 'ignore_auto'):
             continue
 
-        model_admin = getattr(admin_module, item)
         try:
             is_class = issubclass(model_admin, object)
         except TypeError:

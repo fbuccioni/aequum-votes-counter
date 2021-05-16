@@ -6,5 +6,6 @@ dj-database-url
 django-cors-headers
 django-3-jet
 mysqlclient
+django-colorfield
 #Sphinx # Docs
 #tornado # Uncomment if an http server is needed

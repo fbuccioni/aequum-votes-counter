@@ -22,8 +22,7 @@ CUSTOM_ADMIN_PATH = os.path.join(BASE_DIR, 'apps', 'admin')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Make your own secret.
-# You can create one in https://www.lastpass.com/es/password-generator
-SECRET_KEY = 'CHANGE ME!!!'
+SECRET_KEY = 'V@qtSEwuTUdb$$A20h6xr3AzR6jT21KgzQjM%lI7LkZpej@dSL'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'colorfield',
     'rest_framework',
     'drf_yasg',
     'corsheaders',
@@ -68,6 +68,8 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_REGEX_WHITELIST = [
     r'example\.org(:\d+)?$', r'local(:\d+)?$'
 ]
+
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
     #'DEFAULT_AUTHENTICATION_CLASSES': [

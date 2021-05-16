@@ -1,0 +1,72 @@
+body, html {
+    font-family: "Oswald", "Helvetica", "Arial", sans-serif;
+    font-weight: 800;
+    font-size: 140%;
+}
+.container-fluid {
+    font-size: 90%;
+}
+.orange {
+    color: rgb(231, 122, 31);
+}
+yellow {
+    color: #fdc640;
+}
+.border-orange {
+    border-color: rgb(231, 122, 31) !important;
+}
+.percent {
+    color:#000;
+    border-color:#fdc640 !important;
+    font-family: "Montserrat", "Helvetica", "Arial", sans-serif;
+    font-weight: 800;
+}
+.candidate-image {
+    width: 2.5rem;
+    margin-right: 0.5rem;
+    border-width: 2px !important;
+}
+.candidate.percent {
+    width: calc(100% - 5rem);
+    margin: 0 0.5rem;
+}
+.candidate.percent + div {
+    width: 3.2rem;
+}
+p-0 {
+    padding: 0;
+}
+h-10 {
+    height: 10%;
+}
+#polling-places-votes td.percent {
+        height: 2rem;
+}
+#polling-places-votes table tr td:nth-of-type(1) {
+    width: calc(100% - 4rem);
+}
+#polling-places-votes table tr td:nth-of-type(2) {
+    width: 4rem;
+}
+.container-fluid > div:first-of-type {
+    margin-top: 5rem;
+}
+
+
+#list-totals .mb-content, #candidate-totals .mb-content{
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+#list-totals .mb-content::-webkit-scrollbar, #candidate-totals .mb-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+@media (min-width: 1200px) {
+    .container-fluid > div.row:first-of-type > div > div{
+        height: calc(100vh - 6rem);
+        overflow: hidden;
+    }
+}

@@ -13,8 +13,12 @@ class PollingPlace(models.Model):
         Comuna, on_delete=models.PROTECT, related_name="polling_places"
     )
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = gettext("Polling place")
         verbose_name_plural = gettext("Polling places")
 
         db_table = 'vc_polling_places'
+        ordering = ('name',)

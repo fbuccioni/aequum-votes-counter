@@ -1,0 +1,32 @@
+{
+    "Comuna": {
+      "Lugar de votacion 1": {
+        "Mesa 1": {
+          "Rodrigo": 20,
+          "Sara": 30,
+          "Judith": 60,
+          "Total": 120
+        },
+        "Mesa 2": {
+          "Rodrigo": 20,
+          "Sara": 30,
+          "Judith": 60,
+          "Total": 120
+        }
+      },
+      "Lugar de votacion 2": {
+        "Mesa 1": {
+          "Rodrigo": 20,
+          "Sara": 30,
+          "Judith": 60,
+          "Total": 120
+        },
+        "Mesa 2": {
+          "Rodrigo": 20,
+          "Sara": 30,
+          "Judith": 60,
+          "Total": 120
+        }
+      }
+    }
+}

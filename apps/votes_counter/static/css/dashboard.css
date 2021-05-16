@@ -1,3 +1,7 @@
+#total-votes-frame {
+    z-index: 100;
+    background-color: #292433;
+}
 .percent {
     color:#000;
     border-color:#fdc640 !important;
@@ -39,7 +43,7 @@ h-10 {
     width: 4rem;
 }
 .container-fluid > div:first-of-type {
-    margin-top: 5rem;
+    margin-top: 5.1rem;
 }
 
 

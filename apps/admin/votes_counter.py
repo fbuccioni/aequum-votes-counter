@@ -30,6 +30,8 @@ class InlinePollingPlaceTable(admin.TabularInline):
 
 class PollingPlace(admin.ModelAdmin):
     inlines = (InlinePollingPlaceTable,)
+    list_display = ('comuna', 'name')
+    list_display_links = list_display
 
 
 class InlineVotes(admin.TabularInline):
@@ -46,6 +48,8 @@ class InlineVotes(admin.TabularInline):
 
 class PollingPlaceTable(admin.ModelAdmin):
     inlines = (InlineVotes,)
+    list_display = ('polling_place', 'name')
+    list_display_links = list_display
 
 
 class ProfileInline(admin.StackedInline):

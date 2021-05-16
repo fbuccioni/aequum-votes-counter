@@ -26,7 +26,7 @@ class PollingPlaceTable(models.Model):
         verbose_name_plural = gettext("Polling places tables")
 
         db_table = 'vc_polling_places_tables'
-        ordering = ('name',)
+        ordering = ('polling_place__comuna__name', 'polling_place__name', 'name',)
 
 
 @receiver(signals.post_save, sender=PollingPlaceTable)
@@ -40,7 +40,7 @@ def polling_place_table_total_votes_create(sender, instance, created, **kwargs):
             polling_place_table=instance
         )
 
-        for candidate in UserCandidate.objects.all():
+        for candidate in UserCandidate.objects.filter(is_candidate=True):
             if not (
                 Votes.objects.filter(
                     candidate=candidate,

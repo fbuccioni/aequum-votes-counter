@@ -21,4 +21,4 @@ class PollingPlace(models.Model):
         verbose_name_plural = gettext("Polling places")
 
         db_table = 'vc_polling_places'
-        ordering = ('name',)
+        ordering = ('comuna__name', 'name',)

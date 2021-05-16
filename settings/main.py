@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import sys
 import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -164,4 +165,48 @@ STATICFILES_DIRS = (
 
 DATABASES = {
     'default': dj_database_url.parse(os.getenv('DATABASE_DEFAULT_URL', 'no-database-found://'))
+}
+
+LOG_LEVEL = os.getenv("LOG_LEVEL", "ERROR").upper()
+DJANGO_LOG_LEVEL = os.getenv("DJANGO_LOG_LEVEL", 'ERROR').upper()
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'root': {
+        'handlers': ['stdout'],
+        'level': 'DEBUG',
+    },
+    'formatters': {
+       'verbose': {
+            'format': "%(asctime)s %(name)s/%(levelname)s %(message)s",
+            'datefmt': "%Y-%m-%d %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'stdout': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            "stream": sys.stdout,
+            "formatter": "verbose"
+        },
+    },
+    'loggers': {
+        'circular': {
+            'level': LOG_LEVEL,
+        },
+        'django': {
+            'handlers': ['stdout'],
+            'propagate': True,
+            'level': DJANGO_LOG_LEVEL,
+        },
+        '': {
+            'handlers': ['stdout'],
+            'propagate': True,
+            'level': LOG_LEVEL,
+        },
+    },
 }
